@@ -5,10 +5,14 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
+import com.sun.corba.se.spi.orbutil.fsm.State;
+
 import Window.Display;
 import graphics.Assets;
 import graphics.ImageLoader;
 import graphics.SpriteSheet;
+import states.GameState;
+import states.StateManager;
 
 public class Game implements Runnable {
 
@@ -22,7 +26,10 @@ public class Game implements Runnable {
 
 	private BufferStrategy bs;
 	private Graphics g;
-	
+
+	// States
+	private State gameState;
+	private State menuState;
 
 	public Game(String title, int width, int height) {
 
@@ -36,9 +43,16 @@ public class Game implements Runnable {
 
 		display = new Display(title, width, height);
 		Assets.init();
+
+		gameState =  new GameState();
+		StateManager.setState(gameState);
 	}
 
 	private void tick() {
+
+		if (StateManager.getState() != null) {
+			StateManager.getState().tick();
+		}
 
 	}
 
@@ -56,10 +70,15 @@ public class Game implements Runnable {
 		g.clearRect(0, 0, width, height);
 
 		// start drawing
-		
+
 		g.setColor(Color.red);
 		g.fillRect(0, 0, width, height); // background rectangle;
-		g.drawImage(Assets.grass,10,10,null);
+		
+		if(StateManager.getState()!=null) {
+			StateManager.getState().render(g);
+		}
+		
+		
 		// end drawing
 
 		bs.show();
@@ -71,10 +90,34 @@ public class Game implements Runnable {
 
 		init();
 
+		// game loop
+		int fps = 60;
+		double timePerTick = 1000000000 / fps;
+		double delta = 0;
+		long now;
+		long lastTime = System.nanoTime();
+		long timer = 0;
+		int ticks = 0;
+
 		while (running) {
-			tick();
-			render();
+			now = System.nanoTime();
+			delta += (now - lastTime) / timePerTick;
+			timer += now - lastTime;
+			lastTime = now;
+
+			if (delta >= 1) {
+				tick();
+				render();
+				ticks++;
+				delta--;
+			}
+			if (timer >= 1000000000) { // afisare Ticks and Frames
+				System.out.println("Ticks and Frames: " + ticks);
+				ticks = 0;
+				timer = 0;
+			}
 		}
+		// game loop end
 		stop();
 	}
 
