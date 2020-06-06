@@ -1,24 +1,94 @@
 package base;
 
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+
 import Window.Display;
 
-public class Game {
-	
-	private Display display;
-	
-	String title;
-	public int width,height;
-	
+public class Game implements Runnable {
 
+	private Display display;
+
+	String title;
+	public int width, height;
+
+	private Thread thread;
+	private boolean running = false;
+
+	private BufferStrategy bs;
+	private Graphics g;
 
 	public Game(String title, int width, int height) {
-		
-		this.width=width;
-		this.height=height;
-		this.title=title;
-		
-		
-		display=new Display(title,width,height);
+
+		this.width = width;
+		this.height = height;
+		this.title = title;
+
 	}
 
+	private void init() {
+
+		display = new Display(title, width, height);
+
+	}
+
+	private void tick() {
+
+	}
+
+	private void render() {
+
+		bs = display.getCanvas().getBufferStrategy();
+		if (bs == null) {
+			display.getCanvas().createBufferStrategy(3);
+			return;
+		}
+
+		g = bs.getDrawGraphics();
+
+		// start drawing
+
+		g.fillRect(0, 0, width, height); // background rectangle
+
+		
+		// end drawing
+
+		bs.show();
+		g.dispose();
+
+	}
+
+	public void run() {
+
+		init();
+
+		while (running) {
+			tick();
+			render();
+		}
+		stop();
+	}
+
+	public synchronized void start() {
+
+		if (running) // se opreste daca jocul deja ruleaza
+			return;
+
+		running = true;
+		thread = new Thread(this);
+		thread.start();
+	}
+
+	public synchronized void stop() {
+		if (!running) // se opreste daca jocul nu ruleaza
+			return;
+
+		running = false;
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			System.err.print("EROARE LA Thread STOP");
+			e.printStackTrace();
+		}
+	}
 }

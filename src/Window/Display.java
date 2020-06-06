@@ -45,4 +45,8 @@ public class Display {
 		frame.add(canvas); // adaugam canvas la frame
 		frame.pack(); // redimensioneaza sa vedem tot canvas-ul
 	}
+	
+	public Canvas getCanvas() {
+		return canvas;
+	}
 }
