@@ -3,8 +3,12 @@ package base;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 import Window.Display;
+import graphics.Assets;
+import graphics.ImageLoader;
+import graphics.SpriteSheet;
 
 public class Game implements Runnable {
 
@@ -18,6 +22,7 @@ public class Game implements Runnable {
 
 	private BufferStrategy bs;
 	private Graphics g;
+	
 
 	public Game(String title, int width, int height) {
 
@@ -30,7 +35,7 @@ public class Game implements Runnable {
 	private void init() {
 
 		display = new Display(title, width, height);
-
+		Assets.init();
 	}
 
 	private void tick() {
@@ -53,8 +58,8 @@ public class Game implements Runnable {
 		// start drawing
 		
 		g.setColor(Color.red);
-		g.fillRect(0, 0, width, height); // background rectangle
-		
+		g.fillRect(0, 0, width, height); // background rectangle;
+		g.drawImage(Assets.grass,10,10,null);
 		// end drawing
 
 		bs.show();
