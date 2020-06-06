@@ -11,6 +11,7 @@ import Window.Display;
 import graphics.Assets;
 import graphics.ImageLoader;
 import graphics.SpriteSheet;
+import input.KeyManager;
 import states.GameState;
 import states.MenuState;
 import states.StateManager;
@@ -32,26 +33,32 @@ public class Game implements Runnable {
 	private GameState gameState;
 	private MenuState menuState;
 
+	// Input
+	private KeyManager keyManager;
+
 	public Game(String title, int width, int height) {
 
 		this.width = width;
 		this.height = height;
 		this.title = title;
-
+		keyManager = new KeyManager();
 	}
 
 	private void init() {
 
 		display = new Display(title, width, height);
+		display.getFrame().addKeyListener(keyManager);
 		Assets.init();
 
-		gameState = new GameState();
-		menuState = new MenuState();
+		gameState = new GameState(this);
+		menuState = new MenuState(this);
 		StateManager.setState(gameState);
 	}
 
 	private void tick() {
 
+		keyManager.tick();
+		
 		if (StateManager.getState() != null) {
 			StateManager.getState().tick();
 		}
@@ -120,6 +127,10 @@ public class Game implements Runnable {
 		}
 		// game loop end
 		stop();
+	}
+
+	public KeyManager getKeyManager() {
+		return keyManager;
 	}
 
 	public synchronized void start() {

@@ -2,17 +2,19 @@ package states;
 
 import java.awt.Graphics;
 
+import base.Game;
 import entities.Player;
 import graphics.Assets;
 
-public class GameState implements State{
+public class GameState extends State {
 
 	private Player player;
-	
-	public GameState() {
-		player=new Player(100,100);
+
+	public GameState(Game game) {
+		super(game);
+		player = new Player(game, 100, 100);
 	}
-	
+
 	public void tick() {
 		player.tick();
 	}
@@ -21,7 +23,5 @@ public class GameState implements State{
 		g.drawImage(Assets.grass, 10, 10, null);
 		player.render(g);
 	}
-	
-	
 
 }
