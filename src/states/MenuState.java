@@ -2,9 +2,9 @@ package states;
 
 import java.awt.Graphics;
 
-public class Menu extends State{
+public class MenuState implements State{
 	
-	public Menu() {
+	public MenuState() {
 		
 		
 	}

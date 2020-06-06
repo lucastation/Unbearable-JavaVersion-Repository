@@ -12,6 +12,7 @@ import graphics.Assets;
 import graphics.ImageLoader;
 import graphics.SpriteSheet;
 import states.GameState;
+import states.MenuState;
 import states.StateManager;
 
 public class Game implements Runnable {
@@ -28,8 +29,8 @@ public class Game implements Runnable {
 	private Graphics g;
 
 	// States
-	private State gameState;
-	private State menuState;
+	private GameState gameState;
+	private MenuState menuState;
 
 	public Game(String title, int width, int height) {
 
@@ -44,7 +45,8 @@ public class Game implements Runnable {
 		display = new Display(title, width, height);
 		Assets.init();
 
-		gameState =  new GameState();
+		gameState = new GameState();
+		menuState = new MenuState();
 		StateManager.setState(gameState);
 	}
 
@@ -73,12 +75,11 @@ public class Game implements Runnable {
 
 		g.setColor(Color.red);
 		g.fillRect(0, 0, width, height); // background rectangle;
-		
-		if(StateManager.getState()!=null) {
+
+		if (StateManager.getState() != null) {
 			StateManager.getState().render(g);
 		}
-		
-		
+
 		// end drawing
 
 		bs.show();
