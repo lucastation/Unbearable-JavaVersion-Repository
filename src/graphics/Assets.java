@@ -12,6 +12,7 @@ public class Assets {
 
 		player=sheet.crop(0,0,width,height);
 		grass=sheet.crop(32, 0, width, height);
+		player=sheet.crop(100, 100, width, height);
 	}
 
 }
