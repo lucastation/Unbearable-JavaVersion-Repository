@@ -1,10 +1,14 @@
 package Window;
 
+import java.awt.Canvas;
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 
 public class Display {
 
 	private JFrame frame;
+	private Canvas canvas;
 	
 	private String title;
 	private int width, height;
@@ -27,6 +31,18 @@ public class Display {
 		frame.setLocationRelativeTo(null); //centrare in mijloc
 		frame.setVisible(true); //vizibilitate
 		
+		createCanvas();
 		
+	}
+	
+	private void createCanvas() { //Cream Canvas
+		
+		canvas=new Canvas();
+		canvas.setPreferredSize(new Dimension(width,height));
+		canvas.setMaximumSize(new Dimension(width,height));
+		canvas.setMinimumSize(new Dimension(width,height));
+		
+		frame.add(canvas); // adaugam canvas la frame
+		frame.pack(); // redimensioneaza sa vedem tot canvas-ul
 	}
 }
