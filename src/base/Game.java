@@ -1,5 +1,6 @@
 package base;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
@@ -46,10 +47,13 @@ public class Game implements Runnable {
 
 		g = bs.getDrawGraphics();
 
+		// clear Screen
+		g.clearRect(0, 0, width, height);
+
 		// start drawing
-
+		
+		g.setColor(Color.red);
 		g.fillRect(0, 0, width, height); // background rectangle
-
 		
 		// end drawing
 
