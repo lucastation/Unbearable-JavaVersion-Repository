@@ -7,6 +7,7 @@ public class Tile {
 
 	// STATIC
 
+	
 	public static Tile[] tiles = new Tile[256];
 	public static Tile rockTile = new RockTile(0);
 	public static Tile grass1Tile = new Grass1Tile(1);
@@ -38,6 +39,7 @@ public class Tile {
 	public boolean isSolid() {
 		return false;
 	}
+	
 
 	public int getId() {
 		return id;
