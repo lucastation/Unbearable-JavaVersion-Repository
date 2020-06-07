@@ -34,7 +34,7 @@ public class Player extends Creature {
 	}
 
 	public void render(Graphics g) {
-		 g.drawImage(Assets.player, (int) (x-handler.getGameCamera().getxOffset()), (int) (y-handler.getGameCamera().getyOffset()), width, height, null);
+		 g.drawImage(Assets.player, (int) (x-handler.getGameCamera().getxOffset()), (int) (y-handler.getGameCamera().getyOffset()), 128, 128, null);
 	}
 
 }

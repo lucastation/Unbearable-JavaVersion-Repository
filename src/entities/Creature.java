@@ -7,7 +7,7 @@ import base.Handler;
 public abstract class Creature extends Entity {
 
 	public static final int DEFAULT_HEALTH = 100;
-	public static final float DEFAULT_SPEED = 3.0f;
+	public static final float DEFAULT_SPEED = 10.0f;
 	public static final int DEFAULT_CREATURE_WIDTH = 64;
 	public static final int DEFAULT_CREATURE_HEIGHT = 64;
 
