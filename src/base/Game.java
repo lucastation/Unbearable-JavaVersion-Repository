@@ -80,8 +80,6 @@ public class Game implements Runnable {
 
 		// start drawing
 
-		g.setColor(Color.red);
-		g.fillRect(0, 0, width, height); // background rectangle;
 
 		if (StateManager.getState() != null) {
 			StateManager.getState().render(g);

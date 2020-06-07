@@ -34,7 +34,7 @@ public class Player extends Creature {
 	}
 
 	public void render(Graphics g) {
-		g.drawImage(Assets.player, (int) x, (int) y, width, height, null);
+		//g.drawImage(Assets.player, (int) x, (int) y, width, height, null);
 	}
 
 }
