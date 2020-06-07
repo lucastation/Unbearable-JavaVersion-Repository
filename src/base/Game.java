@@ -19,14 +19,18 @@ import states.StateManager;
 
 public class Game implements Runnable {
 
+	//Display
 	private Display display;
 
+	//Titlu si dimensiune frame
 	String title;
 	private int width, height;
-
+	
+	//Thread
 	private Thread thread;
 	private boolean running = false;
 
+	//ImageLoader
 	private BufferStrategy bs;
 	private Graphics g;
 
@@ -39,6 +43,11 @@ public class Game implements Runnable {
 
 	// Camera
 	private GameCamera gameCamera;
+	
+	//Handler
+	private Handler handler;
+	
+	
 
 	public Game(String title, int width, int height) {
 
@@ -55,9 +64,10 @@ public class Game implements Runnable {
 		Assets.init();
 
 		gameCamera = new GameCamera(this, 0, 0);
-
-		gameState = new GameState(this);
-		menuState = new MenuState(this);
+		handler=new Handler(this);
+		
+		gameState = new GameState(handler);
+		menuState = new MenuState(handler);
 		StateManager.setState(gameState);
 	}
 
