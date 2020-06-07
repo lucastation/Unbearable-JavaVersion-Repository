@@ -9,6 +9,7 @@ import com.sun.corba.se.spi.orbutil.fsm.State;
 
 import Window.Display;
 import graphics.Assets;
+import graphics.GameCamera;
 import graphics.ImageLoader;
 import graphics.SpriteSheet;
 import input.KeyManager;
@@ -21,7 +22,7 @@ public class Game implements Runnable {
 	private Display display;
 
 	String title;
-	public int width, height;
+	private int width, height;
 
 	private Thread thread;
 	private boolean running = false;
@@ -36,6 +37,9 @@ public class Game implements Runnable {
 	// Input
 	private KeyManager keyManager;
 
+	// Camera
+	private GameCamera gameCamera;
+
 	public Game(String title, int width, int height) {
 
 		this.width = width;
@@ -49,6 +53,8 @@ public class Game implements Runnable {
 		display = new Display(title, width, height);
 		display.getFrame().addKeyListener(keyManager);
 		Assets.init();
+
+		gameCamera = new GameCamera(this, 0, 0);
 
 		gameState = new GameState(this);
 		menuState = new MenuState(this);
@@ -79,7 +85,6 @@ public class Game implements Runnable {
 		g.clearRect(0, 0, width, height);
 
 		// start drawing
-
 
 		if (StateManager.getState() != null) {
 			StateManager.getState().render(g);
@@ -127,8 +132,21 @@ public class Game implements Runnable {
 		stop();
 	}
 
+	// ===========Geters============
 	public KeyManager getKeyManager() {
 		return keyManager;
+	}
+
+	public GameCamera getGameCamera() {
+		return gameCamera;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
 	}
 
 	public synchronized void start() {
