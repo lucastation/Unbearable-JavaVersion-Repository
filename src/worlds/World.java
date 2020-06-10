@@ -4,6 +4,9 @@ import java.awt.Graphics;
 
 import base.Game;
 import base.Handler;
+import entities.Beer;
+import entities.EntityManager;
+import entities.Player;
 import tile.Tile;
 import utils.Utils;
 
@@ -11,15 +14,34 @@ public class World {
 
 	private Handler handler;
 	private int width, height;
-	private int spawnX, spawnY;
+	private int spawnX=5, spawnY=5;
 	private int[][] tiles;
+	// Entities
+	private EntityManager entityManager;
 
 	public World(Handler handler, String path) {
 		this.handler = handler;
+		
+		entityManager = new EntityManager(handler, new Player(handler, 100, 100));
+		
+		
+		//Beers
+		entityManager.addEntity(new Beer(handler,100,250));
+		
+		
 		loadWorld(path);
+	
+		entityManager.getPlayer().setX(spawnX);
+		entityManager.getPlayer().setY(spawnY);
+	}
+
+	public EntityManager getEntityManager() {
+		return entityManager;
 	}
 
 	public void tick() {
+		
+		entityManager.tick();
 
 	}
 
@@ -36,6 +58,9 @@ public class World {
 				getTile(x, y).render(g, (int) (x * Tile.TILEWIDTH - handler.getGameCamera().getxOffset()),
 						(int) (y * Tile.TILEHEIGHT - handler.getGameCamera().getyOffset()));
 			}
+		//Entities
+		entityManager.render(g);
+		
 	}
 
 	public Tile getTile(int x, int y) {
@@ -67,8 +92,7 @@ public class World {
 
 	}
 
-	
-	//Getters
+	// Getters
 	public int getWidth() {
 		return width;
 	}
